@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "365551280169",
+    "firebase_url": "https://mtdb-5208a.firebaseio.com",
+    "project_id": "mtdb-5208a",
+    "storage_bucket": "mtdb-5208a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365551280169:android:8469296e0e1aa22810bc38",
+        "android_client_info": {
+          "package_name": "cobok.cobok"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365551280169-891lf4ne40lp4d8osjbier6bp74k0mrf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjUgDJlrCi2fnoEh5uJCjDXKYhVTk83AY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365551280169-891lf4ne40lp4d8osjbier6bp74k0mrf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
