@@ -1,10 +1,12 @@
+import 'package:cobok/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:cobok/models/ingredient.dart';
 
 class IngredientTile extends StatefulWidget {
   final Ingredient ingredient;
+  final String id;
 
-  IngredientTile({this.ingredient});
+  IngredientTile({this.ingredient, this.id});
 
   @override
   _IngredientTileState createState() => _IngredientTileState();
@@ -12,6 +14,8 @@ class IngredientTile extends StatefulWidget {
 
 class _IngredientTileState extends State<IngredientTile> {
   bool selected = false;
+
+  DatabaseService databaseService = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +30,9 @@ class _IngredientTileState extends State<IngredientTile> {
             setState(() {
               selected = !selected;
             });
+          },
+          onLongPress: (){
+            databaseService.removeIngredientFromRecipe(widget.id, widget.ingredient);
           },
         ),
       ),

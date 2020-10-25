@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class IngredientList extends StatefulWidget {
+
+  final String id;
+  IngredientList({this.id});
+
   @override
   _IngredientListState createState() => _IngredientListState();
 }
@@ -17,7 +21,7 @@ class _IngredientListState extends State<IngredientList> {
     return ListView.builder(
       itemCount: ingredients.length,
       itemBuilder: (context, index) {
-        return IngredientTile(ingredient: ingredients[index]);
+        return IngredientTile(ingredient: ingredients[index], id: widget.id,);
       },
     );
   }

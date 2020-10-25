@@ -125,7 +125,9 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                     Expanded(
                       child: StreamProvider<List<Ingredient>>.value(
                         value: databaseService.getIngredientsFromRecipe(id),
-                        child: IngredientList(),
+                        child: IngredientList(
+                          id: id,
+                        ),
                       ),
                     ),
                   ],
