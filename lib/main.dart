@@ -1,6 +1,5 @@
 import 'package:cobok/models/user.dart';
 import 'package:cobok/screens/home/home.dart';
-import 'package:cobok/screens/ingredients/add_ingredient.dart';
 import 'package:cobok/screens/ingredients/ingredients.dart';
 import 'package:cobok/screens/recipes/add_ingredients_to_recipe.dart';
 import 'package:cobok/screens/recipes/add_recipe.dart';
@@ -21,7 +20,6 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         home: Wrapper(),
         routes: {
-          '/addIngredient': (context) => AddIngredient(),
           '/ingredients': (context) => Ingredients(),
           '/addRecipe': (context) => AddRecipe(),
           '/addIngredientsToRecipe' : (context) => AddIngredientsToRecipe(),

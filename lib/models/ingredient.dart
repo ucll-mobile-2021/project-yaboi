@@ -1,8 +1,9 @@
 class Ingredient {
-  String name, measurement;
+  String name, measurement, id, recipeID;
   int amount;
 
-  Ingredient({this.name, this.measurement, this.amount});
+  Ingredient(
+      {this.name, this.measurement, this.amount, this.id, this.recipeID});
 
   @override
   String toString() {

@@ -33,12 +33,6 @@ class _HomeState extends State<Home> {
             children: <Widget>[
               FlatButton.icon(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/addIngredient');
-                  },
-                  icon: Icon(Icons.add),
-                  label: Text('Add an ingredient')),
-              FlatButton.icon(
-                  onPressed: () {
                     Navigator.pushNamed(context, '/ingredients');
                   },
                   icon: Icon(Icons.arrow_right),

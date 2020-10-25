@@ -1,6 +1,5 @@
 import 'package:cobok/models/ingredient.dart';
 import 'package:cobok/models/recipe.dart';
-import 'package:cobok/screens/ingredients/add_ingredient.dart';
 import 'package:cobok/screens/recipes/add_ingredients_to_recipe.dart';
 import 'package:cobok/services/database.dart';
 import 'package:cobok/shared/constants.dart';

@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 
 class IngredientList extends StatefulWidget {
 
-  final String id;
-  IngredientList({this.id});
+  final String id, ingredientId;
+  IngredientList({this.id, this.ingredientId});
 
   @override
   _IngredientListState createState() => _IngredientListState();
@@ -21,7 +21,7 @@ class _IngredientListState extends State<IngredientList> {
     return ListView.builder(
       itemCount: ingredients.length,
       itemBuilder: (context, index) {
-        return IngredientTile(ingredient: ingredients[index], id: widget.id,);
+        return IngredientTile(ingredient: ingredients[index], id: widget.id, ingredientId: widget.ingredientId,);
       },
     );
   }

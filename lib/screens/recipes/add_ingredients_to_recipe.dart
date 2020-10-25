@@ -1,7 +1,6 @@
 import 'package:cobok/models/ingredient.dart';
 import 'package:cobok/models/recipe.dart';
 import 'package:cobok/screens/home/home.dart';
-import 'package:cobok/screens/ingredients/add_ingredient.dart';
 import 'package:cobok/screens/ingredients/ingredient_list.dart';
 import 'package:cobok/screens/ingredients/ingredient_tile.dart';
 import 'package:cobok/services/database.dart';
@@ -31,6 +30,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
   Widget build(BuildContext context) {
     recipeMap = ModalRoute.of(context).settings.arguments;
     String id = recipeMap['id'];
+    String ingredientId = randomAlphaNumeric(10);
     return loading
         ? Loading()
         : Scaffold(
@@ -117,16 +117,19 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                         Ingredient newIngredient = Ingredient(
                             name: nameIngredient,
                             measurement: measurement,
-                            amount: amount);
+                            amount: amount,
+                            id: ingredientId,
+                            recipeID: id);
                         databaseService.addIngredientToRecipe(
                             id, newIngredient);
+                        databaseService.addIngredient(newIngredient);
                       },
                     ),
                     Expanded(
                       child: StreamProvider<List<Ingredient>>.value(
                         value: databaseService.getIngredientsFromRecipe(id),
                         child: IngredientList(
-                          id: id,
+                          id: id, ingredientId: ingredientId,
                         ),
                       ),
                     ),

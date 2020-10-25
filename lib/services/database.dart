@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cobok/models/ingredient.dart';
 import 'package:cobok/models/recipe.dart';
+import 'package:random_string/random_string.dart';
 
 class DatabaseService {
   final String uid;
@@ -18,7 +19,7 @@ class DatabaseService {
     });
   }
 
-  final CollectionReference ingredientCollection =
+  /*final CollectionReference ingredientCollection =
       Firestore.instance.collection('ingredients');
 
   Future addIngredient(String name) async {
@@ -36,7 +37,7 @@ class DatabaseService {
 
   Stream<List<Ingredient>> get ingredients {
     return ingredientCollection.snapshots().map(_ingredientListFromSnapshot);
-  }
+  } */
 
 // RECIPES
   final CollectionReference recipeCollection =
@@ -125,5 +126,27 @@ class DatabaseService {
 
   Stream<List<Recipe>> get recipes {
     return recipeCollection.snapshots().map(_recipeListFromSnapshot);
+  }
+
+  // INGREDIENTS
+  Stream<List<Ingredient>> get ingredients {
+    //
+  }
+
+  final CollectionReference ingredientCollection =
+      Firestore.instance.collection('ingredients');
+
+  Future addIngredient(Ingredient ingredient) async {
+    return await ingredientCollection.document(ingredient.id).setData({
+      'nameIngredient': ingredient.name,
+      'measurement': ingredient.measurement,
+      'amount': ingredient.amount,
+      'recipeID': ingredient.recipeID,
+    });
+  }
+
+  Future removeIngredient(String ingredientId) async {
+    // Reference is nodig voor deletion!
+    ingredientCollection.reference().document(ingredientId).delete();
   }
 }

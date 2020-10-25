@@ -4,9 +4,9 @@ import 'package:cobok/models/ingredient.dart';
 
 class IngredientTile extends StatefulWidget {
   final Ingredient ingredient;
-  final String id;
+  final String id, ingredientId;
 
-  IngredientTile({this.ingredient, this.id});
+  IngredientTile({this.ingredient, this.id, this.ingredientId});
 
   @override
   _IngredientTileState createState() => _IngredientTileState();
@@ -31,8 +31,10 @@ class _IngredientTileState extends State<IngredientTile> {
               selected = !selected;
             });
           },
-          onLongPress: (){
-            databaseService.removeIngredientFromRecipe(widget.id, widget.ingredient);
+          onLongPress: () {
+            databaseService.removeIngredientFromRecipe(
+                widget.id, widget.ingredient);
+            databaseService.removeIngredient(widget.ingredientId);
           },
         ),
       ),
