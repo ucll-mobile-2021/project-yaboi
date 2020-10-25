@@ -9,4 +9,11 @@ class Recipe {
   void addIngredientToRecipe(Ingredient ingredient) {
     this.ingredientList.add(ingredient);
   }
+
+  @override
+  String toString() {
+    String text = '';
+    text += name + '\n' + description;
+    return text;
+  }
 }

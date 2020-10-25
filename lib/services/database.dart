@@ -73,31 +73,46 @@ class DatabaseService {
     });
   }
 
-  List<Ingredient> _recipeIngredientsFromSnapshot(QuerySnapshot snapshot) {
+  List<Ingredient> _recipeIngredientsFromSnapshot(
+      QuerySnapshot snapshot, String id) {
     List<Ingredient> ingredients = List<Ingredient>();
-    snapshot.documents.forEach((doc) {
-      List<dynamic> list = doc.data['ingredients'];
-      //print(list.length);
-      //print(list[0]);
-      List<Ingredient> newIngredients = List<Ingredient>();
-      for (int i = 0; i < list.length; i++) {
-        Ingredient ingredient = Ingredient(
-          name: doc.data['ingredients'][i]['nameIngredient'] ?? '',
-          measurement: doc.data['ingredients'][i]['measurement'] ?? '',
-          amount: doc.data['ingredients'][i]['amount'] ?? 0,
-        );
-        newIngredients.add(ingredient);
-      }
-      ingredients = newIngredients;
-    });
-    return ingredients;
+    try {
+      snapshot.documents.forEach((doc) {
+        if (doc.documentID.contains(id)) {
+          List<dynamic> list = doc.data['ingredients'];
+          List<Ingredient> newIngredients = List<Ingredient>();
+          for (int i = 0; i < list.length; i++) {
+            Ingredient ingredient = Ingredient(
+              name: doc.data['ingredients'][i]['nameIngredient'] ?? '',
+              measurement: doc.data['ingredients'][i]['measurement'] ?? '',
+              amount: doc.data['ingredients'][i]['amount'] ?? 0,
+            );
+            newIngredients.add(ingredient);
+          }
+          ingredients = newIngredients;
+        }
+      });
+      print(ingredients);
+      return ingredients;
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
+  Stream<List<Ingredient>> getIngredientsFromRecipe(String id) {
+    //return recipeCollection.snapshots().map(_recipeIngredientsFromSnapshot);
+    return recipeCollection
+        .snapshots()
+        .map((snapshot) => _recipeIngredientsFromSnapshot(snapshot, id));
+  }
+
+  /*
   Stream<List<Ingredient>> get recipeIngredients {
     return recipeCollection.snapshots().map(_recipeIngredientsFromSnapshot);
-  }
+  } */
 
-/* List<Recipe> _recipeListFromSnapshot(QuerySnapshot snapshot) {
+  // RECIPES
+  List<Recipe> _recipeListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Recipe(
           name: doc.data['name'] ?? '', description: doc.data['description']);
@@ -106,5 +121,5 @@ class DatabaseService {
 
   Stream<List<Recipe>> get recipes {
     return recipeCollection.snapshots().map(_recipeListFromSnapshot);
-  } */
+  }
 }
