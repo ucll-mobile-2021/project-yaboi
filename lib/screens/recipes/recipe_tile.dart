@@ -1,4 +1,5 @@
 import 'package:cobok/models/recipe.dart';
+import 'package:cobok/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:cobok/models/ingredient.dart';
 
@@ -24,8 +25,8 @@ class _RecipeTileState extends State<RecipeTile> {
         child: ListTile(
           title: Text(widget.recipe.toString()),
           onTap: () {
-            setState(() {
-              selected = !selected;
+            Navigator.pushNamed(context, '/addIngredientsToRecipe', arguments: {
+              'id': widget.recipe.id,
             });
           },
         ),

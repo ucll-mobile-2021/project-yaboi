@@ -92,10 +92,9 @@ class DatabaseService {
           ingredients = newIngredients;
         }
       });
-      print(ingredients);
       return ingredients;
     } catch (e) {
-      print(e.toString());
+      return ingredients;
     }
   }
 
@@ -114,8 +113,13 @@ class DatabaseService {
   // RECIPES
   List<Recipe> _recipeListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
+      List<Ingredient> ingredients =
+          _recipeIngredientsFromSnapshot(snapshot, doc.documentID.toString());
       return Recipe(
-          name: doc.data['name'] ?? '', description: doc.data['description']);
+          name: doc.data['name'] ?? '',
+          description: doc.data['description'],
+          ingredientList: ingredients,
+          id: doc.documentID);
     }).toList();
   }
 
