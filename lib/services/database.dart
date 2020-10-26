@@ -56,7 +56,8 @@ class DatabaseService {
         {
           'nameIngredient': ingredient.name,
           'measurement': ingredient.measurement,
-          'amount': ingredient.amount
+          'amount': ingredient.amount,
+          'id': ingredient.id,
         }
       ]),
     });
@@ -68,7 +69,8 @@ class DatabaseService {
         {
           'nameIngredient': ingredient.name,
           'measurement': ingredient.measurement,
-          'amount': ingredient.amount
+          'amount': ingredient.amount,
+          'id': ingredient.id,
         }
       ]),
     });
@@ -87,6 +89,7 @@ class DatabaseService {
               name: doc.data['ingredients'][i]['nameIngredient'] ?? '',
               measurement: doc.data['ingredients'][i]['measurement'] ?? '',
               amount: doc.data['ingredients'][i]['amount'] ?? 0,
+              id: doc.data['ingredients'][i]['id'],
             );
             newIngredients.add(ingredient);
           }
