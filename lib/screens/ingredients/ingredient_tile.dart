@@ -29,8 +29,11 @@ class _IngredientTileState extends State<IngredientTile> {
           onTap: () {
             setState(() {
               selected = !selected;
+              print(widget.ingredient.id);
             });
           },
+          //TODO: can't delete ingredient from ingredientCollection because I don't have the ingredientId when returning to
+          // add_ingredients_to_recipe.dart (i.g. when I go a page backwards and return, the ingredientId disappears.
           onLongPress: () {
             databaseService.removeIngredientFromRecipe(
                 widget.id, widget.ingredient);

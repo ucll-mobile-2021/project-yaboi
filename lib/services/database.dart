@@ -129,10 +129,6 @@ class DatabaseService {
   }
 
   // INGREDIENTS
-  Stream<List<Ingredient>> get ingredients {
-    //
-  }
-
   final CollectionReference ingredientCollection =
       Firestore.instance.collection('ingredients');
 
@@ -148,5 +144,19 @@ class DatabaseService {
   Future removeIngredient(String ingredientId) async {
     // Reference is nodig voor deletion!
     ingredientCollection.reference().document(ingredientId).delete();
+  }
+
+  List<Ingredient> _ingredientListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return Ingredient(
+          name: doc.data['nameIngredient'] ?? '',
+          measurement: doc.data['measurement'] ?? '',
+          amount: doc.data['amount'] ?? 0,
+          recipeID: doc.data['recipeID'] ?? '');
+    }).toList();
+  }
+
+  Stream<List<Ingredient>> get ingredients {
+    return ingredientCollection.snapshots().map(_ingredientListFromSnapshot);
   }
 }

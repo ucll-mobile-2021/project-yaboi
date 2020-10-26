@@ -17,11 +17,10 @@ class _IngredientListState extends State<IngredientList> {
   @override
   Widget build(BuildContext context) {
     final ingredients = Provider.of<List<Ingredient>>(context) ?? [];
-
     return ListView.builder(
       itemCount: ingredients.length,
       itemBuilder: (context, index) {
-        return IngredientTile(ingredient: ingredients[index], id: widget.id, ingredientId: widget.ingredientId,);
+        return IngredientTile(ingredient: ingredients[index], id: widget.id, ingredientId: widget.ingredientId);
       },
     );
   }

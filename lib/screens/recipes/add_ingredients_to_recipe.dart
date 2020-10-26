@@ -3,6 +3,7 @@ import 'package:cobok/models/recipe.dart';
 import 'package:cobok/screens/home/home.dart';
 import 'package:cobok/screens/ingredients/ingredient_list.dart';
 import 'package:cobok/screens/ingredients/ingredient_tile.dart';
+import 'package:cobok/screens/recipes/recipes.dart';
 import 'package:cobok/services/database.dart';
 import 'package:cobok/shared/constants.dart';
 import 'package:cobok/shared/loading.dart';
@@ -42,7 +43,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
               leading: new IconButton(
                   icon: new Icon(Icons.check),
                   onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Home()))),
+                      MaterialPageRoute(builder: (context) => Recipes()))),
             ),
             body: Container(
               child: Form(
