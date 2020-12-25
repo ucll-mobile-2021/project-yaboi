@@ -13,8 +13,6 @@ class IngredientTile extends StatefulWidget {
 }
 
 class _IngredientTileState extends State<IngredientTile> {
-  bool selected = false;
-
   DatabaseService databaseService = DatabaseService();
 
   @override
@@ -22,15 +20,18 @@ class _IngredientTileState extends State<IngredientTile> {
     return Padding(
       padding: EdgeInsets.only(top: 8.0),
       child: Card(
-        color: selected ? Colors.blue : Colors.white,
         margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
         child: ListTile(
           title: Text(widget.ingredient.toString()),
           onTap: () {
-            setState(() {
-              selected = !selected;
-              print(widget.ingredient.id);
-            });
+            if (widget.ingredient.id != null) {
+              setState(() {
+                print(widget.ingredient.id);
+              });
+            } else {
+              print("No ingredient id passed");
+              print(widget.ingredient.name);
+            }
           },
           onLongPress: () {
             databaseService.removeIngredientFromRecipe(

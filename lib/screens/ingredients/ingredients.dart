@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cobok/models/ingredient.dart';
 import 'package:cobok/screens/ingredients/ingredient_list.dart';
+import 'package:cobok/screens/search/search_list.dart';
 import 'package:cobok/services/database.dart';
 import 'package:cobok/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _IngredientsState extends State<Ingredients> {
                 elevation: 0.0,
                 title: Text('Ingredients'),
               ),
-              body: IngredientList(),
+              body: SearchList(),
             ),
           );
   }
