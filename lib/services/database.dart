@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cobok/models/ingredient.dart';
 import 'package:cobok/models/recipe.dart';
+import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
 
 class DatabaseService {
@@ -162,4 +163,51 @@ class DatabaseService {
   Stream<List<Ingredient>> get ingredients {
     return ingredientCollection.snapshots().map(_ingredientListFromSnapshot);
   }
+
+  Card getFilteredRecipe(Recipe recipe, List<String> selectedIngredients) {
+    List<String> missingIngredients = List<String>();
+    int total = recipe.ingredientList.length;
+    int count = 0;
+    recipe.ingredientList.forEach((ingredient) {
+      if (selectedIngredients.contains(ingredient.toString())) {
+        count++;
+      } else {
+        missingIngredients.add(ingredient.toString());
+      }
+    });
+    double p = (count / total);
+    String percentage = (p * 100).toString() + "%";
+    if (p > 0) {
+      return Card(
+        child: ListTile(
+          title: Text(recipe.name +
+              " -- " +
+              percentage +
+              "\n" +
+              "missing ingredients: " +
+              missingIngredients.toString()),
+        ),
+      );
+    } else {
+      return Card();
+    }
+  }
+
+/* Map<double, Recipe> getFilteredRecipes(
+      List<Recipe> recipes, List<String> selectedIngredients) {
+    Map<double, Recipe> filteredRecipes = Map<double, Recipe>();
+    double count = 0;
+
+    recipes.forEach((recipe) {
+      recipe.ingredientList.forEach((ingredient) {
+        if (selectedIngredients.contains(ingredient.toString())) {
+          count++;
+        }
+      });
+      count = (count / recipe.ingredientList.length) * 100;
+      filteredRecipes[count] = recipe;
+      count = 0;
+    });
+    return filteredRecipes;
+  } */
 }

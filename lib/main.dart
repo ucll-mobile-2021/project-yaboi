@@ -4,6 +4,7 @@ import 'package:cobok/screens/ingredients/ingredients.dart';
 import 'package:cobok/screens/recipes/add_ingredients_to_recipe.dart';
 import 'package:cobok/screens/recipes/add_recipe.dart';
 import 'package:cobok/screens/recipes/recipes.dart';
+import 'package:cobok/screens/search/filtered_recipes.dart';
 import 'package:cobok/screens/wrapper.dart';
 import 'package:cobok/services/auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
           '/addIngredientsToRecipe' : (context) => AddIngredientsToRecipe(),
           '/recipes' : (context) => Recipes(),
           '/home' : (context) => Home(),
+          '/filteredRecipes' : (context) => FilteredRecipes(),
         },
       ),
     );

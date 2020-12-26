@@ -1,5 +1,6 @@
 import 'package:cobok/models/ingredient.dart';
 import 'package:cobok/screens/ingredients/ingredient_tile.dart';
+import 'package:cobok/screens/search/filtered_recipes.dart';
 import 'package:cobok/screens/search/search_card.dart';
 import 'package:cobok/services/database.dart';
 import 'package:cobok/shared/constants.dart';
@@ -56,8 +57,8 @@ class _SearchListState extends State<SearchList> {
         FlatButton(
           child: Text("Search"),
           onPressed: () {
-            setState(() {
-              print("eyo whatup");
+            Navigator.pushNamed(context, '/filteredRecipes', arguments: {
+              'selectedIngredients': selectedIngredients,
             });
           },
         ),
