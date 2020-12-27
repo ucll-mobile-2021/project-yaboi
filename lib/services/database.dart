@@ -193,21 +193,23 @@ class DatabaseService {
     }
   }
 
-/* Map<double, Recipe> getFilteredRecipes(
+  List<Recipe> getFilteredRecipes(
       List<Recipe> recipes, List<String> selectedIngredients) {
-    Map<double, Recipe> filteredRecipes = Map<double, Recipe>();
+    List<Recipe> filteredRecipes = recipes;
     double count = 0;
 
-    recipes.forEach((recipe) {
+    filteredRecipes.forEach((recipe) {
       recipe.ingredientList.forEach((ingredient) {
         if (selectedIngredients.contains(ingredient.toString())) {
           count++;
         }
       });
       count = (count / recipe.ingredientList.length) * 100;
-      filteredRecipes[count] = recipe;
+      recipe.setPercentage(count);
       count = 0;
     });
+    filteredRecipes
+        .sort((a, b) => b.getPercentage().compareTo(a.getPercentage()));
     return filteredRecipes;
-  } */
+  }
 }
