@@ -49,6 +49,12 @@ class _HomeState extends State<Home> {
                   },
                   icon: Icon(Icons.arrow_right),
                   label: Text('Show recipes')),
+              FlatButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/groceryList');
+                  },
+                  icon: Icon(Icons.shopping_basket),
+                  label: Text('Show your grocery list')),
             ],
           ),
         ));

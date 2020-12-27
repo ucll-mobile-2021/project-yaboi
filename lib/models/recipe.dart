@@ -14,7 +14,6 @@ class Recipe {
   @override
   String toString() {
     String text = '';
-    text += this.percentage.toString() + " -- ";
     text += name + '\n' + description + '\n';
     ingredientList.forEach((ingredient) {
       text += ingredient.toString() + '\n';

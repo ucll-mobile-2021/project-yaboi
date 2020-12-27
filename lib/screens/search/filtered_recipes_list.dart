@@ -21,15 +21,13 @@ class _FilteredRecipesListState extends State<FilteredRecipesList> {
   @override
   Widget build(BuildContext context) {
     final recipes = Provider.of<List<Recipe>>(context) ?? [];
-    List<Recipe> list =
+    List<Recipe> filteredRecipes =
         databaseService.getFilteredRecipes(recipes, widget.selectedIngredients);
     return ListView.builder(
       itemCount: recipes.length,
       itemBuilder: (context, index) {
-        /* return databaseService.getFilteredRecipe(
-            recipes[index], widget.selectedIngredients); */
         return databaseService.getFilteredRecipe(
-            list[index], widget.selectedIngredients);
+            filteredRecipes[index], widget.selectedIngredients);
       },
     );
   }

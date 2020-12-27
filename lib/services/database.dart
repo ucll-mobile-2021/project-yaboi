@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cobok/models/ingredient.dart';
 import 'package:cobok/models/recipe.dart';
+import 'package:cobok/screens/search/result_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
 
@@ -13,32 +15,37 @@ class DatabaseService {
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
 
-  Future updateUserData(String name, int age) async {
+  Future updateUserData(String email) async {
     return await userCollection.document(uid).setData({
-      'name': name,
-      'age': age,
+      'email': email,
     });
   }
 
-  /*final CollectionReference ingredientCollection =
-      Firestore.instance.collection('ingredients');
-
-  Future addIngredient(String name) async {
-    return await ingredientCollection.document(name).setData({
-      'name': name,
+  Future addUserGroceryList(String recipeName, List<String> list) async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    list.forEach((element) async {
+      return await userCollection.document(user.uid).updateData({
+        'groceryList': FieldValue.arrayUnion([
+          {
+            recipeName: element,
+          }
+        ]),
+      });
     });
   }
 
-  // List from snapshot
-  List<Ingredient> _ingredientListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.documents.map((doc) {
-      return Ingredient(name: doc.data['name'] ?? '');
-    }).toList();
+  Future removeUserGroceryList(String recipeName, List<String> list) async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    list.forEach((element) async {
+      return await userCollection.document(user.uid).updateData({
+        'groceryList': FieldValue.arrayRemove([
+          {
+            recipeName: element,
+          }
+        ]),
+      });
+    });
   }
-
-  Stream<List<Ingredient>> get ingredients {
-    return ingredientCollection.snapshots().map(_ingredientListFromSnapshot);
-  } */
 
 // RECIPES
   final CollectionReference recipeCollection =
@@ -110,11 +117,6 @@ class DatabaseService {
         .map((snapshot) => _recipeIngredientsFromSnapshot(snapshot, id));
   }
 
-  /*
-  Stream<List<Ingredient>> get recipeIngredients {
-    return recipeCollection.snapshots().map(_recipeIngredientsFromSnapshot);
-  } */
-
   // RECIPES
   List<Recipe> _recipeListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
@@ -164,7 +166,7 @@ class DatabaseService {
     return ingredientCollection.snapshots().map(_ingredientListFromSnapshot);
   }
 
-  Card getFilteredRecipe(Recipe recipe, List<String> selectedIngredients) {
+  Container getFilteredRecipe(Recipe recipe, List<String> selectedIngredients) {
     List<String> missingIngredients = List<String>();
     int total = recipe.ingredientList.length;
     int count = 0;
@@ -175,21 +177,14 @@ class DatabaseService {
         missingIngredients.add(ingredient.toString());
       }
     });
-    double p = (count / total);
-    String percentage = (p * 100).toString() + "%";
+    double p = (count / total) * 100;
+    String percentage = (p).toStringAsFixed(0) + "%";
     if (p > 0) {
-      return Card(
-        child: ListTile(
-          title: Text(recipe.name +
-              " -- " +
-              percentage +
-              "\n" +
-              "missing ingredients: " +
-              missingIngredients.toString()),
-        ),
-      );
+      return Container(
+          child: ResultCard(
+              recipe, selectedIngredients, missingIngredients, percentage));
     } else {
-      return Card();
+      return Container();
     }
   }
 
@@ -212,4 +207,64 @@ class DatabaseService {
         .sort((a, b) => b.getPercentage().compareTo(a.getPercentage()));
     return filteredRecipes;
   }
+
+  String getMissingIngredientsOutput(List<String> missingIngredients) {
+    String text = "";
+    missingIngredients.forEach((ingredient) {
+      text += ingredient + "\n";
+    });
+    return text;
+  }
 }
+
+/* Card(
+        child: ListTile(
+            trailing: pressed
+                ? FlatButton.icon(
+                    icon: Icon(Icons.add_shopping_cart),
+                    onPressed: () {
+                      addUserGroceryList(recipe.name, missingIngredients);
+                      pressed = true;
+                    },
+                    label: Text("add list"),
+                  )
+                : FlatButton.icon(
+                    icon: Icon(Icons.remove),
+                    onPressed: () {
+                      removeUserGroceryList(recipe.name, missingIngredients);
+                      pressed = false;
+                    },
+                    label: Text("remove list"),
+                  ),
+            title: RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                    text: recipe.name + "\n",
+                    style: TextStyle(color: Colors.black.withOpacity(1.0)),
+                  ),
+                  TextSpan(
+                    text: "ingredients available: " + percentage + "\n",
+                    style: TextStyle(color: Colors.black.withOpacity(1.0)),
+                  ),
+                  missingIngredients.isNotEmpty
+                      ? TextSpan(
+                          text: "MISSING INGREDIENTS: " + "\n",
+                          style: TextStyle(
+                              color: Colors.black.withOpacity(1.0),
+                              fontWeight: FontWeight.bold),
+                        )
+                      : TextSpan(
+                          text: "READY TO COOK",
+                          style: TextStyle(
+                              color: Colors.green.withOpacity(1.0),
+                              fontWeight: FontWeight.bold)),
+                  TextSpan(
+                    text:
+                        getMissingIngredientsOutput(missingIngredients) + "\n",
+                    style: TextStyle(color: Colors.red.withOpacity(1.0)),
+                  ),
+                ],
+              ),
+            )),
+      ); */
