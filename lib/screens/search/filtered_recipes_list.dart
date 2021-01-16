@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FilteredRecipesList extends StatefulWidget {
-  final List<String> selectedIngredients;
+  final List<Ingredient> selectedIngredients;
 
   FilteredRecipesList({this.selectedIngredients});
 

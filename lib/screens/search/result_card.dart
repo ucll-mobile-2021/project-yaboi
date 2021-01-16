@@ -6,7 +6,7 @@ import 'package:cobok/models/ingredient.dart';
 class ResultCard extends StatefulWidget {
   final Recipe recipe;
   final List<String> selectedIngredients;
-  final List<String> missingIngredients;
+  final List<Ingredient> missingIngredients;
   final String percentage;
 
   ResultCard(this.recipe, this.selectedIngredients, this.missingIngredients,
@@ -24,10 +24,12 @@ class _ResultCardState extends State<ResultCard> {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        /*
           trailing: pressed
               ? FlatButton.icon(
                   icon: Icon(Icons.add_shopping_cart),
                   onPressed: () {
+
                     databaseService.addUserGroceryList(
                         widget.recipe.name, widget.missingIngredients);
                     setState(() {
@@ -39,6 +41,7 @@ class _ResultCardState extends State<ResultCard> {
               : FlatButton.icon(
                   icon: Icon(Icons.remove),
                   onPressed: () {
+
                     databaseService.removeUserGroceryList(
                         widget.recipe.name, widget.missingIngredients);
                     setState(() {
@@ -46,7 +49,7 @@ class _ResultCardState extends State<ResultCard> {
                     });
                   },
                   label: Text("remove list"),
-                ),
+                ), */
           title: RichText(
             text: TextSpan(
               children: <TextSpan>[

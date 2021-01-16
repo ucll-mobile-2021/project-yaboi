@@ -14,23 +14,42 @@ class SearchList extends StatefulWidget {
 
 class _SearchListState extends State<SearchList> {
   DatabaseService databaseService = DatabaseService();
-  List<String> selectedIngredients = List<String>();
+  List<Ingredient> selectedIngredients = List<Ingredient>();
   String nameIngredient = '';
+  int amountIngredient = 0;
 
   @override
   Widget build(BuildContext context) {
     final ingredients = Provider.of<List<Ingredient>>(context) ?? [];
+    List<Ingredient> ingredientList = ingredients.toList();
     return Column(
       children: <Widget>[
-        Form(
-          child: TextFormField(
-            decoration: textInputDecoration.copyWith(hintText: 'name'),
-            onChanged: (val) {
-              setState(() {
-                nameIngredient = val;
-              });
-            },
-          ),
+        Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                decoration:
+                    textInputDecoration.copyWith(hintText: 'enter name'),
+                onChanged: (val) {
+                  setState(() {
+                    nameIngredient = val;
+                  });
+                },
+              ),
+            ),
+            Expanded(
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                decoration:
+                    textInputDecoration.copyWith(hintText: 'enter amount'),
+                onChanged: (val) {
+                  setState(() {
+                    amountIngredient = int.parse(val);
+                  });
+                },
+              ),
+            ),
+          ],
         ),
         // Expanded is goeie shit, column werkt nu. Vraag me niet waarom, ik ben verlegen
         Expanded(
@@ -40,15 +59,16 @@ class _SearchListState extends State<SearchList> {
                 if (nameIngredient == '') {
                   return SearchCard(
                     ingredient: ingredients[index],
-                    nameIngredient: nameIngredient,
                     selectedIngredients: selectedIngredients,
+                    ingredientList: ingredientList,
                   );
                 } else {
-                  return ingredients[index].name == nameIngredient
+                  return ingredients[index].name.contains(nameIngredient) &&
+                          ingredients[index].amount <= amountIngredient
                       ? SearchCard(
                           ingredient: ingredients[index],
-                          nameIngredient: nameIngredient,
                           selectedIngredients: selectedIngredients,
+                          ingredientList: ingredientList,
                         )
                       : Container();
                 }

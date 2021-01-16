@@ -23,7 +23,7 @@ class _FilteredRecipesState extends State<FilteredRecipes> {
   @override
   Widget build(BuildContext context) {
     selectedIngredientsMap = ModalRoute.of(context).settings.arguments;
-    List<String> selectedIngredientsList =
+    List<Ingredient> selectedIngredientsList =
         selectedIngredientsMap['selectedIngredients'];
 
     return loading

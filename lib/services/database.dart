@@ -4,7 +4,6 @@ import 'package:cobok/models/recipe.dart';
 import 'package:cobok/screens/search/result_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:random_string/random_string.dart';
 
 class DatabaseService {
   final String uid;
@@ -166,15 +165,24 @@ class DatabaseService {
     return ingredientCollection.snapshots().map(_ingredientListFromSnapshot);
   }
 
-  Container getFilteredRecipe(Recipe recipe, List<String> selectedIngredients) {
-    List<String> missingIngredients = List<String>();
+  List<String> getTextListIngredients(List<Ingredient> ingredients) {
+    List<String> list = List<String>();
+    ingredients.forEach((element) {
+      list.add(element.toString());
+    });
+    return list;
+  }
+
+  Container getFilteredRecipe(Recipe recipe, List<Ingredient> ingredients) {
+    List<String> selectedIngredients = getTextListIngredients(ingredients);
+    List<Ingredient> missingIngredients = List<Ingredient>();
     int total = recipe.ingredientList.length;
     int count = 0;
     recipe.ingredientList.forEach((ingredient) {
       if (selectedIngredients.contains(ingredient.toString())) {
         count++;
       } else {
-        missingIngredients.add(ingredient.toString());
+        missingIngredients.add(ingredient);
       }
     });
     double p = (count / total) * 100;
@@ -189,7 +197,8 @@ class DatabaseService {
   }
 
   List<Recipe> getFilteredRecipes(
-      List<Recipe> recipes, List<String> selectedIngredients) {
+      List<Recipe> recipes, List<Ingredient> ingredients) {
+    List<String> selectedIngredients = getTextListIngredients(ingredients);
     List<Recipe> filteredRecipes = recipes;
     double count = 0;
 
@@ -208,7 +217,8 @@ class DatabaseService {
     return filteredRecipes;
   }
 
-  String getMissingIngredientsOutput(List<String> missingIngredients) {
+  String getMissingIngredientsOutput(List<Ingredient> ingredients) {
+    List<String> missingIngredients = getTextListIngredients(ingredients);
     String text = "";
     missingIngredients.forEach((ingredient) {
       text += ingredient + "\n";
@@ -216,55 +226,3 @@ class DatabaseService {
     return text;
   }
 }
-
-/* Card(
-        child: ListTile(
-            trailing: pressed
-                ? FlatButton.icon(
-                    icon: Icon(Icons.add_shopping_cart),
-                    onPressed: () {
-                      addUserGroceryList(recipe.name, missingIngredients);
-                      pressed = true;
-                    },
-                    label: Text("add list"),
-                  )
-                : FlatButton.icon(
-                    icon: Icon(Icons.remove),
-                    onPressed: () {
-                      removeUserGroceryList(recipe.name, missingIngredients);
-                      pressed = false;
-                    },
-                    label: Text("remove list"),
-                  ),
-            title: RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                    text: recipe.name + "\n",
-                    style: TextStyle(color: Colors.black.withOpacity(1.0)),
-                  ),
-                  TextSpan(
-                    text: "ingredients available: " + percentage + "\n",
-                    style: TextStyle(color: Colors.black.withOpacity(1.0)),
-                  ),
-                  missingIngredients.isNotEmpty
-                      ? TextSpan(
-                          text: "MISSING INGREDIENTS: " + "\n",
-                          style: TextStyle(
-                              color: Colors.black.withOpacity(1.0),
-                              fontWeight: FontWeight.bold),
-                        )
-                      : TextSpan(
-                          text: "READY TO COOK",
-                          style: TextStyle(
-                              color: Colors.green.withOpacity(1.0),
-                              fontWeight: FontWeight.bold)),
-                  TextSpan(
-                    text:
-                        getMissingIngredientsOutput(missingIngredients) + "\n",
-                    style: TextStyle(color: Colors.red.withOpacity(1.0)),
-                  ),
-                ],
-              ),
-            )),
-      ); */
