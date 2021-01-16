@@ -225,4 +225,15 @@ class DatabaseService {
     });
     return text;
   }
+
+  Future removeRecipe(String recipeId) async {
+    // Reference is nodig voor deletion!
+    recipeCollection.reference().document(recipeId).delete();
+    ingredientCollection
+        .where('recipeID', isEqualTo: recipeId)
+        .getDocuments()
+        .then((snapshot) => snapshot.documents.forEach((element) {
+              element.reference.delete();
+            }));
+  }
 }

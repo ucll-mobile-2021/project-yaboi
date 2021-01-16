@@ -39,7 +39,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
             appBar: AppBar(
               backgroundColor: Colors.brown[400],
               elevation: 0.0,
-              title: Text('add ingredients for $id'),
+              title: Text('add ingredients'),
               leading: new IconButton(
                   icon: new Icon(Icons.check),
                   onPressed: () => Navigator.push(context,

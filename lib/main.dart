@@ -3,6 +3,7 @@ import 'package:cobok/screens/home/home.dart';
 import 'package:cobok/screens/ingredients/ingredients.dart';
 import 'package:cobok/screens/recipes/add_ingredients_to_recipe.dart';
 import 'package:cobok/screens/recipes/add_recipe.dart';
+import 'package:cobok/screens/recipes/delete_recipes.dart';
 import 'package:cobok/screens/recipes/recipes.dart';
 import 'package:cobok/screens/search/filtered_recipes.dart';
 import 'package:cobok/screens/search/grocery_list.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
           '/recipes': (context) => Recipes(),
           '/home': (context) => Home(),
           '/filteredRecipes': (context) => FilteredRecipes(),
+          '/deleteRecipes' : (context) => DeleteRecipes(),
           '/groceryList': (context) => GroceryList(),
         },
       ),

@@ -30,47 +30,56 @@ class _HomeState extends State<Home> {
         ),
         body: SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              FlatButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/ingredients');
-                  },
-                  icon: Icon(Icons.arrow_right),
-                  label: Text('View ingredients')),
-              FlatButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/addRecipe');
-                  },
-                  icon: Icon(Icons.add),
-                  label: Text('Add a recipe')),
-              FlatButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/recipes');
-                  },
-                  icon: Icon(Icons.arrow_right),
-                  label: Text('Show recipes')),
-              FlatButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/groceryList');
-                  },
-                  icon: Icon(Icons.shopping_basket),
-                  label: Text('Show your grocery list')),
+              Container(
+                child: FlatButton.icon(
+                    padding: EdgeInsets.all(35.0),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/ingredients');
+                    },
+                    icon: Icon(Icons.list),
+                    label: Text('View ingredients')),
+              ),
+              Container(
+                child: FlatButton.icon(
+                    padding: EdgeInsets.all(35.0),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/addRecipe');
+                    },
+                    icon: Icon(Icons.add),
+                    label: Text('Add a recipe')),
+              ),
+              Container(
+                child: FlatButton.icon(
+                    padding: EdgeInsets.all(35.0),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/recipes');
+                    },
+                    icon: Icon(Icons.import_contacts),
+                    label: Text('Show recipes')),
+              ),
+              Container(
+                child: FlatButton.icon(
+                    padding: EdgeInsets.all(35.0),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/deleteRecipes');
+                    },
+                    icon: Icon(Icons.delete),
+                    label: Text('Delete recipes')),
+              ),
+              Container(
+                child: FlatButton.icon(
+                    padding: EdgeInsets.all(35.0),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/groceryList');
+                    },
+                    icon: Icon(Icons.shopping_basket),
+                    label: Text('Show your grocery list')),
+              ),
             ],
           ),
         ));
   }
 }
-
-/*     return Scaffold(
-        body: SafeArea(
-      child: Column(
-        children: <Widget>[
-          FlatButton.icon(
-              onPressed: () {
-                Navigator.pushNamed(context, '/ingredientList');
-              },
-              icon: Icon(Icons.arrow_forward),
-              label: Text('Go to ingredients'))
-        ],
-      ),
-    )); */
