@@ -4,6 +4,7 @@ class Recipe {
   final String name, description, id;
   final List<Ingredient> ingredientList;
   double percentage;
+  String owner;
 
   Recipe({this.name, this.description, this.id, this.ingredientList});
 

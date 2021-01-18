@@ -17,6 +17,7 @@ class _SearchListState extends State<SearchList> {
   List<Ingredient> selectedIngredients = List<Ingredient>();
   String nameIngredient = '';
   int amountIngredient = 0;
+  List<String> ingredientNameList = List<String>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,9 @@ class _SearchListState extends State<SearchList> {
       children: <Widget>[
         Row(
           children: [
+            SizedBox(
+              width: 5.0,
+            ),
             Expanded(
               child: TextFormField(
                 decoration:
@@ -36,6 +40,9 @@ class _SearchListState extends State<SearchList> {
                   });
                 },
               ),
+            ),
+            SizedBox(
+              width: 5.0,
             ),
             Expanded(
               child: TextFormField(
@@ -49,28 +56,37 @@ class _SearchListState extends State<SearchList> {
                 },
               ),
             ),
+            SizedBox(
+              width: 5.0,
+            ),
           ],
         ),
+
         // Expanded is goeie shit, column werkt nu. Vraag me niet waarom, ik ben verlegen
         Expanded(
           child: ListView.builder(
               itemCount: ingredients.length,
               itemBuilder: (context, index) {
-                if (nameIngredient == '') {
-                  return SearchCard(
-                    ingredient: ingredients[index],
-                    selectedIngredients: selectedIngredients,
-                    ingredientList: ingredientList,
-                  );
+                if (!ingredientNameList.contains(ingredients[index].name)) {
+                  ingredientNameList.add(ingredients[index].name);
+                  if (nameIngredient == '') {
+                    return SearchCard(
+                      ingredient: ingredients[index],
+                      selectedIngredients: selectedIngredients,
+                      ingredientList: ingredientList,
+                    );
+                  } else {
+                    return ingredients[index].name.contains(nameIngredient) &&
+                            ingredients[index].amount <= amountIngredient
+                        ? SearchCard(
+                            ingredient: ingredients[index],
+                            selectedIngredients: selectedIngredients,
+                            ingredientList: ingredientList,
+                          )
+                        : Container();
+                  }
                 } else {
-                  return ingredients[index].name.contains(nameIngredient) &&
-                          ingredients[index].amount <= amountIngredient
-                      ? SearchCard(
-                          ingredient: ingredients[index],
-                          selectedIngredients: selectedIngredients,
-                          ingredientList: ingredientList,
-                        )
-                      : Container();
+                  return Container();
                 }
               }),
         ),

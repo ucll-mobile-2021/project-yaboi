@@ -1,5 +1,6 @@
 import 'package:cobok/models/recipe.dart';
 import 'package:cobok/services/database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cobok/models/ingredient.dart';
 

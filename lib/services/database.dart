@@ -20,7 +20,7 @@ class DatabaseService {
     });
   }
 
-  Future addUserGroceryList(String recipeName, List<String> list) async {
+  /*Future addUserGroceryList(String recipeName, List<String> list) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     list.forEach((element) async {
       return await userCollection.document(user.uid).updateData({
@@ -44,16 +44,19 @@ class DatabaseService {
         ]),
       });
     });
-  }
+  } */
 
 // RECIPES
   final CollectionReference recipeCollection =
       Firestore.instance.collection('recipes');
 
   Future addRecipe(String name, String description, String id) async {
+    final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    final userid = user.uid;
     return await recipeCollection.document(id).setData({
       'name': name,
       'description': description,
+      'owner': userid,
     });
   }
 
@@ -110,7 +113,6 @@ class DatabaseService {
   }
 
   Stream<List<Ingredient>> getIngredientsFromRecipe(String id) {
-    //return recipeCollection.snapshots().map(_recipeIngredientsFromSnapshot);
     return recipeCollection
         .snapshots()
         .map((snapshot) => _recipeIngredientsFromSnapshot(snapshot, id));
@@ -138,11 +140,14 @@ class DatabaseService {
       Firestore.instance.collection('ingredients');
 
   Future addIngredient(Ingredient ingredient) async {
+    final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    final userid = user.uid;
     return await ingredientCollection.document(ingredient.id).setData({
       'nameIngredient': ingredient.name,
       'measurement': ingredient.measurement,
       'amount': ingredient.amount,
       'recipeID': ingredient.recipeID,
+      'owner': userid,
     });
   }
 

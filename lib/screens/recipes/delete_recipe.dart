@@ -21,35 +21,39 @@ class _DeleteRecipeState extends State<DeleteRecipe> {
     return ListView.builder(
       itemCount: recipes.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(recipes[index].name),
-          onTap: () {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("Delete this recipe?"),
-                    content: Text("test"),
-                    actions: <Widget>[
-                      FlatButton(
-                        child: Text("No"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      FlatButton(
-                        child: Text("Yes"),
-                        onPressed: () {
-                          setState(() {
-                            databaseService.removeRecipe(recipes[index].id);
-                          });
-                          Navigator.of(context).pop();
-                        },
-                      )
-                    ],
-                  );
-                });
-          },
+        String delName = recipes[index].name;
+        return Card(
+          child: ListTile(
+            title:
+                Text(recipes[index].name + "\n" + recipes[index].description),
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Are you sure?"),
+                      content: Text("Delete '$delName'?"),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text("Yes"),
+                          onPressed: () {
+                            setState(() {
+                              databaseService.removeRecipe(recipes[index].id);
+                            });
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        FlatButton(
+                          child: Text("No"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
         );
       },
     );
