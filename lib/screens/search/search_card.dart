@@ -23,9 +23,9 @@ class _SearchCardState extends State<SearchCard> {
     return Padding(
         padding: EdgeInsets.only(top: 8.0),
         child: Card(
-          color: widget.selectedIngredients.contains(widget.ingredient)
+          /*color: widget.selectedIngredients.contains(widget.ingredient)
               ? Colors.blue
-              : Colors.white,
+              : Colors.white, */
           margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
           child: ListTile(
             title: Text(widget.ingredient.name +
@@ -48,13 +48,18 @@ class _SearchCardState extends State<SearchCard> {
                           inputAmountIngredient = int.parse(val);
                           setState(() {
                             widget.ingredientList.forEach((element) {
-                              if (element.amount <= inputAmountIngredient && element.name == widget.ingredient.name) {
-                                if(!widget.selectedIngredients.contains(element))
-                                widget.selectedIngredients.add(element);
+                              if (element.amount <= inputAmountIngredient &&
+                                  element.name == widget.ingredient.name) {
+                                if (!widget.selectedIngredients
+                                    .contains(element))
+                                  widget.selectedIngredients.add(element);
                               } else {
-                                if (element.amount > inputAmountIngredient && element.name == widget.ingredient.name)
-                                  if(widget.selectedIngredients.contains(element))
-                                widget.selectedIngredients.remove(element);
+                                if (element.amount > inputAmountIngredient &&
+                                    element.name ==
+                                        widget.ingredient.name) if (widget
+                                    .selectedIngredients
+                                    .contains(element))
+                                  widget.selectedIngredients.remove(element);
                               }
                             });
                           });

@@ -18,7 +18,6 @@ class ResultCard extends StatefulWidget {
 
 class _ResultCardState extends State<ResultCard> {
   DatabaseService databaseService = DatabaseService();
-  bool pressed = true;
 
   @override
   Widget build(BuildContext context) {
