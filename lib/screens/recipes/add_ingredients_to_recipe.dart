@@ -53,7 +53,8 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                     Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(vertical: 4.0),
+                          padding: EdgeInsets.only(
+                              left: 5.0, right: 5.0, top: 4.0, bottom: 4.0),
                           child: TextFormField(
                             decoration:
                                 textInputDecoration.copyWith(hintText: 'name'),
@@ -61,7 +62,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                                 val.isEmpty ? 'Enter name' : null,
                             onChanged: (val) {
                               setState(() {
-                                nameIngredient = val;
+                                nameIngredient = val.trim();
                               });
                             },
                           ),
@@ -71,16 +72,17 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                             Expanded(
                               flex: 3,
                               child: Container(
-                                padding: EdgeInsets.only(right: 2.0),
+                                padding: EdgeInsets.only(right: 2.0, left: 5.0),
                                 child: TextFormField(
                                   keyboardType: TextInputType.number,
                                   decoration: textInputDecoration.copyWith(
                                       hintText: 'amount'),
-                                  validator: (val) =>
-                                      val is int ? 'Enter amount' : 0,
+                                  validator: (val) => int.tryParse(val) == 0 || val.isEmpty
+                                      ? 'Enter amount'
+                                      : null,
                                   onChanged: (val) {
                                     setState(() {
-                                      amount = int.parse(val);
+                                      amount = int.parse(val.trim());
                                     });
                                   },
                                 ),
@@ -90,7 +92,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                               flex: 7,
                               child: Container(
                                 width: 0.5,
-                                padding: EdgeInsets.only(left: 2.0),
+                                padding: EdgeInsets.only(left: 2.0, right: 5.0),
                                 child: TextFormField(
                                   decoration: textInputDecoration.copyWith(
                                       hintText: 'measurement'),
@@ -98,7 +100,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                                       val.isEmpty ? 'Enter measurement' : null,
                                   onChanged: (val) {
                                     setState(() {
-                                      measurement = val;
+                                      measurement = val.trim();
                                     });
                                   },
                                 ),
@@ -115,22 +117,35 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () async {
-                        Ingredient newIngredient = Ingredient(
-                            name: nameIngredient,
-                            measurement: measurement,
-                            amount: amount,
-                            id: ingredientId,
-                            recipeID: id);
-                        databaseService.addIngredientToRecipe(
-                            id, newIngredient);
-                        databaseService.addIngredient(newIngredient);
+                        if (_formKey.currentState.validate()) {
+                          if (nameIngredient == null ||
+                              nameIngredient.isEmpty ||
+                              measurement == null ||
+                              measurement.isEmpty ||
+                              amount == 0) {
+                            setState(() {
+                              error = 'Could not sign in with credentials';
+                            });
+                          } else {
+                            Ingredient newIngredient = Ingredient(
+                                name: nameIngredient,
+                                measurement: measurement,
+                                amount: amount,
+                                id: ingredientId,
+                                recipeID: id);
+                            databaseService.addIngredientToRecipe(
+                                id, newIngredient);
+                            databaseService.addIngredient(newIngredient);
+                          }
+                        }
                       },
                     ),
                     Expanded(
                       child: StreamProvider<List<Ingredient>>.value(
                         value: databaseService.getIngredientsFromRecipe(id),
                         child: IngredientList(
-                          id: id, ingredientId: ingredientId,
+                          id: id,
+                          ingredientId: ingredientId,
                         ),
                       ),
                     ),

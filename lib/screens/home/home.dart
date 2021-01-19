@@ -24,6 +24,8 @@ class _HomeState extends State<Home> {
               label: Text('logout'),
               onPressed: () async {
                 await _auth.signOut();
+                // Fakkin magic hiero: pop alle screens
+                Navigator.popUntil(context, ModalRoute.withName("/"));
               },
             ),
           ],

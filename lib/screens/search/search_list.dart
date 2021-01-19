@@ -32,14 +32,17 @@ class _SearchListState extends State<SearchList> {
               width: 5.0,
             ),
             Expanded(
-              child: TextFormField(
-                decoration:
-                    textInputDecoration.copyWith(hintText: 'enter name'),
-                onChanged: (val) {
-                  setState(() {
-                    nameIngredient = val;
-                  });
-                },
+              child: Container(
+                padding: EdgeInsets.only(top: 4.0),
+                child: TextFormField(
+                  decoration:
+                      textInputDecoration.copyWith(hintText: 'enter name'),
+                  onChanged: (val) {
+                    setState(() {
+                      nameIngredient = val;
+                    });
+                  },
+                ),
               ),
             ),
             SizedBox(

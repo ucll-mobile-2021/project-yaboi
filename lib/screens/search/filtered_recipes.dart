@@ -37,7 +37,18 @@ class _FilteredRecipesState extends State<FilteredRecipes> {
                 elevation: 0.0,
                 title: Text('Search results'),
               ),
-              body: FilteredRecipesList(selectedIngredients: selectedIngredientsList,),
-            ));
+              body: selectedIngredientsList.isNotEmpty
+                  ? FilteredRecipesList(
+                      selectedIngredients: selectedIngredientsList,
+                    )
+                  : Center(
+                      child: Text(
+                        'NO RESULTS FOUND',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
+                    ),
+            ),
+          );
   }
 }
