@@ -19,10 +19,6 @@ class GroceryList extends StatefulWidget {
 class _GroceryListState extends State<GroceryList> {
   bool loading = false;
   final DatabaseService databaseService = DatabaseService();
-  final AuthService _auth = AuthService();
-
-  // text field state
-  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +28,12 @@ class _GroceryListState extends State<GroceryList> {
         : Scaffold(
             backgroundColor: Colors.brown[100],
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
+              backgroundColor: Colors.red[300],
               elevation: 0.0,
               title: Text('Your grocery list'),
               leading: IconButton(
                   icon: Icon(Icons.arrow_back),
-                  onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Home()))),
+                  onPressed: () => Navigator.pop(context, '/')),
             ),
             body: StreamBuilder<UserData>(
                 stream: DatabaseService(uid: user.uid).userData,
@@ -53,18 +48,18 @@ class _GroceryListState extends State<GroceryList> {
                             children: [
                               Card(
                                 child: ListTile(
+                                  trailing: IconButton(
+                                      icon: Icon(Icons.close),
+                                      color: Colors.black,
+                                      onPressed: () {
+                                        databaseService.removeUserIngredient(
+                                            userData.groceryList[index],
+                                            userData.uid);
+                                      }),
                                   title: Text(
                                       userData.groceryList[index].toString()),
                                 ),
                               ),
-                              IconButton(
-                                  icon: Icon(Icons.chevron_right),
-                                  color: Colors.black26,
-                                  onPressed: () {
-                                    databaseService.removeUserIngredient(
-                                        userData.groceryList[index],
-                                        userData.uid);
-                                  }),
                             ],
                           );
                         },

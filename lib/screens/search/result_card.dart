@@ -29,7 +29,7 @@ class _ResultCardState extends State<ResultCard> {
                   icon: Icon(Icons.add_shopping_cart),
                   onPressed: () {
                     databaseService
-                        .addUserGroceryList(widget.missingIngredients);
+                        .addUserGroceryList(widget.missingIngredients, widget.recipe.name);
                     setState(() {
                       pressed = false;
                     });
@@ -40,7 +40,7 @@ class _ResultCardState extends State<ResultCard> {
                   icon: Icon(Icons.remove),
                   onPressed: () {
                     databaseService
-                        .removeUserGroceryList(widget.missingIngredients);
+                        .removeUserGroceryList(widget.missingIngredients, widget.recipe.name);
                     setState(() {
                       pressed = true;
                     });

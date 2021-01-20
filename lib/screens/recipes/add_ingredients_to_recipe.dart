@@ -33,7 +33,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
         : Scaffold(
             backgroundColor: Colors.brown[100],
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
+              backgroundColor: Colors.red[300],
               elevation: 0.0,
               title: Text('add ingredients'),
               leading: new IconButton(

@@ -29,7 +29,7 @@ class _RegisterState extends State<Register> {
         : Scaffold(
             backgroundColor: Colors.brown[100],
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
+              backgroundColor: Colors.red[300],
               elevation: 0.0,
               title: Text('Register'),
               actions: <Widget>[

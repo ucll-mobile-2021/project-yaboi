@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
           title: Text("Home"),
-          backgroundColor: Colors.brown[400],
+          backgroundColor: Colors.red[300],
           elevation: 0.0,
           actions: <Widget>[
             FlatButton.icon(
@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       Navigator.pushNamed(context, '/addRecipe');
                     },
-                    icon: Icon(Icons.add),
+                    icon: Icon(Icons.input),
                     label: Text('Add a recipe')),
               ),
               Container(

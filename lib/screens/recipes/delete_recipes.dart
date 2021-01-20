@@ -32,21 +32,19 @@ class _DeleteRecipesState extends State<DeleteRecipes> {
     return loading
         ? Loading()
         : StreamProvider<List<Recipe>>.value(
-      value: databaseService.recipes,
-      child: Scaffold(
-        backgroundColor: Colors.brown[100],
-        appBar: AppBar(
-          backgroundColor: Colors.brown[400],
-          elevation: 0.0,
-          title: Text('Delete Recipes'),
-          leading: new IconButton(
-              icon: new Icon(Icons.arrow_back),
-              onPressed: () =>
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Home()))),
-        ),
-        body: DeleteRecipe(),
-      ),
-    );
+            value: databaseService.recipes,
+            child: Scaffold(
+              backgroundColor: Colors.brown[100],
+              appBar: AppBar(
+                backgroundColor: Colors.red[300],
+                elevation: 0.0,
+                title: Text('Delete Recipes'),
+                leading: new IconButton(
+                    icon: new Icon(Icons.arrow_back),
+                    onPressed: () => Navigator.pop(context, '/')),
+              ),
+              body: DeleteRecipe(),
+            ),
+          );
   }
 }

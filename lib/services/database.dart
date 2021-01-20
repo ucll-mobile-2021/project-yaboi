@@ -21,7 +21,7 @@ class DatabaseService {
     });
   }
 
-  Future addUserGroceryList(List<Ingredient> list) async {
+  Future addUserGroceryList(List<Ingredient> list, String recipeName) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     list.forEach((element) async {
       return await userCollection.document(user.uid).updateData({
@@ -30,13 +30,14 @@ class DatabaseService {
             'name': element.name,
             'measurement': element.measurement,
             'amount': element.amount,
+            'recipeName': recipeName,
           }
         ]),
       });
     });
   }
 
-  Future removeUserGroceryList(List<Ingredient> list) async {
+  Future removeUserGroceryList(List<Ingredient> list, String recipeName) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     list.forEach((element) async {
       return await userCollection.document(user.uid).updateData({
@@ -45,11 +46,29 @@ class DatabaseService {
             'name': element.name,
             'measurement': element.measurement,
             'amount': element.amount,
+            'recipeName': recipeName,
           }
         ]),
       });
     });
   }
+
+  /*
+  List<String> getIngredientNames(List<Ingredient> ingredients) {
+    List<String> ingredientNames = List<String>();
+    ingredients.forEach((element) {
+      ingredientNames.add(element.name);
+    });
+    return ingredientNames;
+  }
+
+  List<String> getIngredientMeasurements(List<Ingredient> ingredients) {
+    List<String> ingredientMeasurements = List<String>();
+    ingredients.forEach((element) {
+      ingredientMeasurements.add(element.measurement);
+    });
+    return ingredientMeasurements;
+  } */
 
   // My tears
   // UserData from snapshot
@@ -60,7 +79,8 @@ class DatabaseService {
       groceryList.add(Ingredient(
           name: element['name'],
           measurement: element['measurement'],
-          amount: element['amount']));
+          amount: element['amount'],
+          recipeName: element['recipeName']));
     });
     return UserData(
       uid: uid,
@@ -80,6 +100,7 @@ class DatabaseService {
           'name': ingredient.name,
           'measurement': ingredient.measurement,
           'amount': ingredient.amount,
+          'recipeName' : ingredient.recipeName,
         }
       ]),
     });
