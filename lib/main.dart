@@ -6,7 +6,7 @@ import 'package:cobok/screens/recipes/add_recipe.dart';
 import 'package:cobok/screens/recipes/delete_recipes.dart';
 import 'package:cobok/screens/recipes/recipes.dart';
 import 'package:cobok/screens/search/filtered_recipes.dart';
-import 'package:cobok/screens/search/grocery_list.dart';
+import 'package:cobok/screens/search/groceries.dart';
 import 'package:cobok/screens/wrapper.dart';
 import 'package:cobok/services/auth.dart';
 import 'package:flutter/cupertino.dart';

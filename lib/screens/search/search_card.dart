@@ -43,29 +43,28 @@ class _SearchCardState extends State<SearchCard> {
                       keyboardType: TextInputType.number,
                       decoration: textInputDecoration.copyWith(hintText: '0'),
                       textAlign: TextAlign.end,
-                      onChanged: (val) {
+                      onChanged: (val) async {
                         setState(() {
-                          inputAmountIngredient = int.parse(val);
-                          setState(() {
-                            widget.ingredientList.forEach((element) {
-                              if (element.amount <= inputAmountIngredient &&
-                                  element.name == widget.ingredient.name) {
-                                if (!widget.selectedIngredients
-                                    .contains(element))
-                                  widget.selectedIngredients.add(element);
-                              } else {
-                                if (element.amount > inputAmountIngredient &&
-                                    element.name ==
-                                        widget.ingredient.name) if (widget
-                                    .selectedIngredients
-                                    .contains(element))
-                                  widget.selectedIngredients.remove(element);
-                              }
-                            });
+                          inputAmountIngredient = int.tryParse(val);
+                          widget.ingredientList.forEach((element) {
+                            if (inputAmountIngredient != null &&
+                                element.amount <= inputAmountIngredient &&
+                                element.name == widget.ingredient.name) {
+                              if (!widget.selectedIngredients.contains(element))
+                                widget.selectedIngredients.add(element);
+                            } else {
+                              if (inputAmountIngredient != null &&
+                                  element.amount > inputAmountIngredient &&
+                                  element.name ==
+                                      widget.ingredient.name) if (widget
+                                  .selectedIngredients
+                                  .contains(element))
+                                widget.selectedIngredients.remove(element);
+                            }
                           });
-                          //if(widget.selectedIngredients.isNotEmpty)
-                          print(widget.selectedIngredients);
                         });
+                        // Le checkity check:
+                        // print(widget.selectedIngredients);
                       },
                     ),
                   ),

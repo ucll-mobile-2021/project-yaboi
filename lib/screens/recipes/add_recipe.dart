@@ -1,6 +1,4 @@
-import 'package:cobok/models/ingredient.dart';
 import 'package:cobok/models/recipe.dart';
-import 'package:cobok/screens/recipes/add_ingredients_to_recipe.dart';
 import 'package:cobok/services/database.dart';
 import 'package:cobok/shared/constants.dart';
 import 'package:cobok/shared/loading.dart';
@@ -66,8 +64,8 @@ class _AddRecipeState extends State<AddRecipe> {
                         maxLines: 4,
                         decoration: textInputDecoration.copyWith(
                             hintText: 'description'),
-                        validator: (val) =>
-                            val.isEmpty ? 'Enter description' : null,
+                        /*validator: (val) =>
+                            val.isEmpty ? 'Enter description' : null, */
                         onChanged: (val) {
                           setState(() {
                             description = val;
@@ -86,25 +84,32 @@ class _AddRecipeState extends State<AddRecipe> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () async {
-                        String id = randomAlphaNumeric(10);
-                        Recipe newRecipe = Recipe(
-                            name: recipe, description: description, id: id);
-                        databaseService.recipeCollection
-                            .document(id)
-                            .get()
-                            .then((value) => {
-                                  if (value.exists)
-                                    {print('bestaat')}
-                                  else
-                                    {
-                                      databaseService.addRecipe(newRecipe.name,
-                                          newRecipe.description, newRecipe.id)
-                                    }
+                        if (_formKey.currentState.validate()) {
+                          if (recipe.isNotEmpty) {
+                            String id = randomAlphaNumeric(10);
+                            Recipe newRecipe = Recipe(
+                                name: recipe, description: description, id: id);
+                            databaseService.recipeCollection
+                                .document(id)
+                                .get()
+                                .then((value) => {
+                                      if (value.exists)
+                                        {print('bestaat')}
+                                      else
+                                        {
+                                          databaseService.addRecipe(
+                                              newRecipe.name,
+                                              newRecipe.description,
+                                              newRecipe.id)
+                                        }
+                                    });
+                            Navigator.pushNamed(
+                                context, '/addIngredientsToRecipe',
+                                arguments: {
+                                  'id': id,
                                 });
-                        Navigator.pushNamed(context, '/addIngredientsToRecipe',
-                            arguments: {
-                              'id': id,
-                            });
+                          }
+                        }
                       },
                     ),
                   ],

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cobok/models/ingredient.dart';
 import 'package:cobok/models/recipe.dart';
+import 'package:cobok/models/user.dart';
 import 'package:cobok/screens/search/result_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,31 +21,57 @@ class DatabaseService {
     });
   }
 
-  /*Future addUserGroceryList(String recipeName, List<String> list) async {
+  Future addUserGroceryList(List<Ingredient> list) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     list.forEach((element) async {
       return await userCollection.document(user.uid).updateData({
         'groceryList': FieldValue.arrayUnion([
           {
-            recipeName: element,
+            'name': element.name,
+            'measurement': element.measurement,
+            'amount': element.amount,
           }
         ]),
       });
     });
   }
 
-  Future removeUserGroceryList(String recipeName, List<String> list) async {
+  Future removeUserGroceryList(List<Ingredient> list) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     list.forEach((element) async {
       return await userCollection.document(user.uid).updateData({
         'groceryList': FieldValue.arrayRemove([
           {
-            recipeName: element,
+            'name': element.name,
+            'measurement': element.measurement,
+            'amount': element.amount,
           }
         ]),
       });
     });
-  } */
+  }
+
+  // My tears
+  // UserData from snapshot
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    List<Ingredient> groceryList = List<Ingredient>();
+    List<dynamic> list = snapshot.data['groceryList'];
+    list.forEach((element) {
+      groceryList.add(Ingredient(
+          name: element['name'],
+          measurement: element['measurement'],
+          amount: element['amount']));
+    });
+    return UserData(
+      uid: uid,
+      email: snapshot.data['email'],
+      groceryList: groceryList,
+    );
+  }
+
+  Stream<UserData> get userData {
+    return userCollection.document(uid).snapshots().map(_userDataFromSnapshot);
+  }
 
 // RECIPES
   final CollectionReference recipeCollection =
@@ -192,7 +219,7 @@ class DatabaseService {
     });
     double p = (count / total) * 100;
     String percentage = (p).toStringAsFixed(0) + "%";
-    if (p > 0) {
+    if (p >= 0) {
       return Container(
           child: ResultCard(
               recipe, selectedIngredients, missingIngredients, percentage));

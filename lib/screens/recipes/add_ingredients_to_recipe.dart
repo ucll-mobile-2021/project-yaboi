@@ -1,8 +1,5 @@
 import 'package:cobok/models/ingredient.dart';
-import 'package:cobok/models/recipe.dart';
-import 'package:cobok/screens/home/home.dart';
 import 'package:cobok/screens/ingredients/ingredient_list.dart';
-import 'package:cobok/screens/ingredients/ingredient_tile.dart';
 import 'package:cobok/screens/recipes/recipes.dart';
 import 'package:cobok/services/database.dart';
 import 'package:cobok/shared/constants.dart';
@@ -24,7 +21,6 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
   final DatabaseService databaseService = DatabaseService();
-  String error = '';
   Map recipeMap = {};
 
   @override
@@ -77,7 +73,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                                   keyboardType: TextInputType.number,
                                   decoration: textInputDecoration.copyWith(
                                       hintText: 'amount'),
-                                  validator: (val) => int.tryParse(val) == 0 || val.isEmpty
+                                  validator: (val) => val == '0' || val.isEmpty || val == null
                                       ? 'Enter amount'
                                       : null,
                                   onChanged: (val) {
@@ -122,10 +118,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                               nameIngredient.isEmpty ||
                               measurement == null ||
                               measurement.isEmpty ||
-                              amount == 0) {
-                            setState(() {
-                              error = 'Could not sign in with credentials';
-                            });
+                              amount == 0 || amount == null) {
                           } else {
                             Ingredient newIngredient = Ingredient(
                                 name: nameIngredient,

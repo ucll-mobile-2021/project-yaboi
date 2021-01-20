@@ -1,6 +1,4 @@
 import 'package:cobok/models/ingredient.dart';
-import 'package:cobok/screens/ingredients/ingredient_tile.dart';
-import 'package:cobok/screens/search/filtered_recipes.dart';
 import 'package:cobok/screens/search/search_card.dart';
 import 'package:cobok/services/database.dart';
 import 'package:cobok/shared/constants.dart';
@@ -16,7 +14,6 @@ class _SearchListState extends State<SearchList> {
   DatabaseService databaseService = DatabaseService();
   List<Ingredient> selectedIngredients = List<Ingredient>();
   String nameIngredient = '';
-  int amountIngredient = 0;
   List<String> ingredientNameList;
 
   @override

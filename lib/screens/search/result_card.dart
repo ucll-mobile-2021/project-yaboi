@@ -18,37 +18,35 @@ class ResultCard extends StatefulWidget {
 
 class _ResultCardState extends State<ResultCard> {
   DatabaseService databaseService = DatabaseService();
+  bool pressed = true;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        /*
           trailing: pressed
               ? FlatButton.icon(
                   icon: Icon(Icons.add_shopping_cart),
                   onPressed: () {
-
-                    databaseService.addUserGroceryList(
-                        widget.recipe.name, widget.missingIngredients);
+                    databaseService
+                        .addUserGroceryList(widget.missingIngredients);
                     setState(() {
                       pressed = false;
                     });
                   },
-                  label: Text("add list"),
+                  label: Text("add"),
                 )
               : FlatButton.icon(
                   icon: Icon(Icons.remove),
                   onPressed: () {
-
-                    databaseService.removeUserGroceryList(
-                        widget.recipe.name, widget.missingIngredients);
+                    databaseService
+                        .removeUserGroceryList(widget.missingIngredients);
                     setState(() {
                       pressed = true;
                     });
                   },
-                  label: Text("remove list"),
-                ), */
+                  label: Text("remove"),
+                ),
           title: RichText(
             text: TextSpan(
               children: <TextSpan>[

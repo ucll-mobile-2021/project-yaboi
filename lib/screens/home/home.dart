@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
                       Navigator.pushNamed(context, '/ingredients');
                     },
                     icon: Icon(Icons.list),
-                    label: Text('View ingredients')),
+                    label: Text('View ingredients / Search recipe')),
               ),
               Container(
                 child: FlatButton.icon(
