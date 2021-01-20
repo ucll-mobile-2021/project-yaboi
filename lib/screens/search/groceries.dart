@@ -45,11 +45,32 @@ class _GroceryListState extends State<GroceryList> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     UserData userData = snapshot.data;
-                    return Container(
-                      child: Text(userData.groceryList.toString() +
-                          ' -- ' +
-                          userData.email),
-                    );
+                    if (userData.groceryList.isNotEmpty) {
+                      return ListView.builder(
+                        itemCount: userData.groceryList.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              Card(
+                                child: ListTile(
+                                  title: Text(
+                                      userData.groceryList[index].toString()),
+                                ),
+                              ),
+                              IconButton(
+                                  icon: Icon(Icons.chevron_right),
+                                  color: Colors.black26,
+                                  onPressed: () {
+                                    databaseService.removeUserIngredient(
+                                        userData.groceryList[index],
+                                        userData.uid);
+                                  }),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                    return Card();
                   } else {
                     return Container(
                       child: Text('NO DATA'),

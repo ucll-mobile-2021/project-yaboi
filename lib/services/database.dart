@@ -73,6 +73,18 @@ class DatabaseService {
     return userCollection.document(uid).snapshots().map(_userDataFromSnapshot);
   }
 
+  Future removeUserIngredient(Ingredient ingredient, String id) async {
+    return await userCollection.document(id).updateData({
+      'groceryList': FieldValue.arrayRemove([
+        {
+          'name': ingredient.name,
+          'measurement': ingredient.measurement,
+          'amount': ingredient.amount,
+        }
+      ]),
+    });
+  }
+
 // RECIPES
   final CollectionReference recipeCollection =
       Firestore.instance.collection('recipes');
