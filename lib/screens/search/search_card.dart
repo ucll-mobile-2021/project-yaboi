@@ -7,8 +7,13 @@ class SearchCard extends StatefulWidget {
   final Ingredient ingredient;
   final List<Ingredient> selectedIngredients;
   final List<Ingredient> ingredientList;
+  final Map<String, int> inputMap;
 
-  SearchCard({this.ingredient, this.selectedIngredients, this.ingredientList});
+  SearchCard(
+      {this.ingredient,
+      this.selectedIngredients,
+      this.ingredientList,
+      this.inputMap});
 
   @override
   _SearchCardState createState() => _SearchCardState();
@@ -49,19 +54,24 @@ class _SearchCardState extends State<SearchCard> {
                           widget.ingredientList.forEach((element) {
                             if (inputAmountIngredient != null &&
                                 element.amount <= inputAmountIngredient &&
-                                element.name == widget.ingredient.name) {
+                                element.name == widget.ingredient.name &&
+                                element.measurement ==
+                                    widget.ingredient.measurement) {
                               if (!widget.selectedIngredients.contains(element))
                                 widget.selectedIngredients.add(element);
                             } else {
                               if (inputAmountIngredient != null &&
                                   element.amount > inputAmountIngredient &&
-                                  element.name ==
-                                      widget.ingredient.name) if (widget
+                                  element.name == widget.ingredient.name &&
+                                  element.measurement ==
+                                      widget.ingredient.measurement) if (widget
                                   .selectedIngredients
                                   .contains(element))
                                 widget.selectedIngredients.remove(element);
                             }
                           });
+                          widget.inputMap[widget.ingredient.getNameAndMeasurement()] =
+                              inputAmountIngredient;
                         });
                         // Le checkity check:
                         // print(widget.selectedIngredients);

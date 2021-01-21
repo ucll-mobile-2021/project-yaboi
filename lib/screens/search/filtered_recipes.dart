@@ -1,8 +1,5 @@
 import 'package:cobok/models/ingredient.dart';
 import 'package:cobok/models/recipe.dart';
-import 'package:cobok/screens/ingredients/ingredient_tile.dart';
-import 'package:cobok/screens/recipes/recipe_list.dart';
-import 'package:cobok/screens/recipes/recipe_tile.dart';
 import 'package:cobok/screens/search/filtered_recipes_list.dart';
 import 'package:cobok/services/database.dart';
 import 'package:cobok/shared/loading.dart';
@@ -25,6 +22,7 @@ class _FilteredRecipesState extends State<FilteredRecipes> {
     selectedIngredientsMap = ModalRoute.of(context).settings.arguments;
     List<Ingredient> selectedIngredientsList =
         selectedIngredientsMap['selectedIngredients'];
+    Map<String, int> inputMap = selectedIngredientsMap['inputMap'];
 
     return loading
         ? Loading()
@@ -37,17 +35,10 @@ class _FilteredRecipesState extends State<FilteredRecipes> {
                 elevation: 0.0,
                 title: Text('Search results'),
               ),
-              body: selectedIngredientsList.isNotEmpty
-                  ? FilteredRecipesList(
-                      selectedIngredients: selectedIngredientsList,
-                    )
-                  : Center(
-                      child: Text(
-                        'NO RESULTS FOUND',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontStyle: FontStyle.italic),
-                      ),
-                    ),
+              body: FilteredRecipesList(
+                selectedIngredients: selectedIngredientsList,
+                inputMap: inputMap,
+              ),
             ),
           );
   }

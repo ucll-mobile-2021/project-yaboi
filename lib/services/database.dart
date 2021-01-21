@@ -238,27 +238,33 @@ class DatabaseService {
     return list;
   }
 
-  Container getFilteredRecipe(Recipe recipe, List<Ingredient> ingredients) {
+  Container getFilteredRecipe(
+      Recipe recipe, List<Ingredient> ingredients, Map<String, int> inputMap) {
     List<String> selectedIngredients = getTextListIngredients(ingredients);
     List<Ingredient> missingIngredients = List<Ingredient>();
     int total = recipe.ingredientList.length;
-    int count = 0;
+    double count = 0;
     recipe.ingredientList.forEach((ingredient) {
       if (selectedIngredients.contains(ingredient.toString())) {
         count++;
       } else {
+        if (inputMap[ingredient.getNameAndMeasurement()] != null) {
+          if (inputMap[ingredient.getNameAndMeasurement()] <
+              ingredient.amount) {
+            int oldAmount = ingredient.amount;
+            ingredient.amount -= inputMap[ingredient.getNameAndMeasurement()];
+            count += inputMap[ingredient.getNameAndMeasurement()] / oldAmount;
+          }
+        }
         missingIngredients.add(ingredient);
       }
     });
     double p = (count / total) * 100;
     String percentage = (p).toStringAsFixed(0) + "%";
-    if (p > 0) {
-      return Container(
-          child: ResultCard(
-              recipe, selectedIngredients, missingIngredients, percentage));
-    } else {
-      return Container();
-    }
+
+    return Container(
+        child: ResultCard(
+            recipe, selectedIngredients, missingIngredients, percentage));
   }
 
   List<Recipe> getFilteredRecipes(

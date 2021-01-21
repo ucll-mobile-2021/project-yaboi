@@ -1,15 +1,14 @@
 import 'package:cobok/models/ingredient.dart';
 import 'package:cobok/models/recipe.dart';
-import 'package:cobok/screens/ingredients/ingredient_tile.dart';
-import 'package:cobok/screens/recipes/recipe_tile.dart';
 import 'package:cobok/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FilteredRecipesList extends StatefulWidget {
   final List<Ingredient> selectedIngredients;
+  final Map<String, int> inputMap;
 
-  FilteredRecipesList({this.selectedIngredients});
+  FilteredRecipesList({this.selectedIngredients, this.inputMap});
 
   @override
   _FilteredRecipesListState createState() => _FilteredRecipesListState();
@@ -26,8 +25,8 @@ class _FilteredRecipesListState extends State<FilteredRecipesList> {
     return ListView.builder(
       itemCount: recipes.length,
       itemBuilder: (context, index) {
-        return databaseService.getFilteredRecipe(
-            filteredRecipes[index], widget.selectedIngredients);
+        return databaseService.getFilteredRecipe(filteredRecipes[index],
+            widget.selectedIngredients, widget.inputMap);
       },
     );
   }

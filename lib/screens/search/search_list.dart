@@ -15,6 +15,7 @@ class _SearchListState extends State<SearchList> {
   List<Ingredient> selectedIngredients = List<Ingredient>();
   String nameIngredient = '';
   List<String> ingredientNameList;
+  Map<String, int> inputMap = Map<String, int>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +33,8 @@ class _SearchListState extends State<SearchList> {
               child: Container(
                 padding: EdgeInsets.only(top: 8.0, left: 4.0, right: 4.0),
                 child: TextFormField(
-                  decoration:
-                      textInputDecoration.copyWith(hintText: 'enter ingredient name'),
+                  decoration: textInputDecoration.copyWith(
+                      hintText: 'enter ingredient name'),
                   onChanged: (val) {
                     setState(() {
                       nameIngredient = val;
@@ -61,6 +62,7 @@ class _SearchListState extends State<SearchList> {
                       ingredient: ingredients[index],
                       selectedIngredients: selectedIngredients,
                       ingredientList: ingredientList,
+                      inputMap: inputMap,
                     );
                   } else {
                     return ingredients[index].name.contains(nameIngredient)
@@ -68,6 +70,7 @@ class _SearchListState extends State<SearchList> {
                             ingredient: ingredients[index],
                             selectedIngredients: selectedIngredients,
                             ingredientList: ingredientList,
+                            inputMap: inputMap,
                           )
                         : Container();
                   }
@@ -81,6 +84,7 @@ class _SearchListState extends State<SearchList> {
           onPressed: () {
             Navigator.pushNamed(context, '/filteredRecipes', arguments: {
               'selectedIngredients': selectedIngredients,
+              'inputMap': inputMap,
             });
           },
         ),
