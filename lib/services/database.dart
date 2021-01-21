@@ -245,46 +245,55 @@ class DatabaseService {
     int total = recipe.ingredientList.length;
     double count = 0;
     recipe.ingredientList.forEach((ingredient) {
-      if (selectedIngredients.contains(ingredient.toString())) {
-        count++;
-      } else {
-        if (inputMap[ingredient.getNameAndMeasurement()] != null) {
-          if (inputMap[ingredient.getNameAndMeasurement()] <
-              ingredient.amount) {
-            int oldAmount = ingredient.amount;
-            ingredient.amount -= inputMap[ingredient.getNameAndMeasurement()];
-            count += inputMap[ingredient.getNameAndMeasurement()] / oldAmount;
-          }
+      if (inputMap[ingredient.getNameAndMeasurement()] != null) {
+        if (inputMap[ingredient.getNameAndMeasurement()] < ingredient.amount) {
+          int oldAmount = ingredient.amount;
+          int newAmount =
+              ingredient.amount - inputMap[ingredient.getNameAndMeasurement()];
+          count += newAmount / oldAmount;
+          ingredient.amount = newAmount;
         }
-        missingIngredients.add(ingredient);
+      } else {
+        count++;
       }
+      missingIngredients.add(ingredient);
     });
-    double p = (count / total) * 100;
-    String percentage = (p).toStringAsFixed(0) + "%";
+    double p = (1 - (count / total)) * 100;
+    String percentage = (p).toStringAsPrecision(3) + "%";
 
     return Container(
         child: ResultCard(
             recipe, selectedIngredients, missingIngredients, percentage));
   }
 
-  List<Recipe> getFilteredRecipes(
-      List<Recipe> recipes, List<Ingredient> ingredients) {
+  List<Recipe> getFilteredRecipes(List<Recipe> recipes,
+      List<Ingredient> ingredients, Map<String, int> inputMap) {
     List<String> selectedIngredients = getTextListIngredients(ingredients);
     List<Recipe> filteredRecipes = recipes;
-    double count = 0;
 
     filteredRecipes.forEach((recipe) {
+      double count = 0;
+      int total = recipe.ingredientList.length;
       recipe.ingredientList.forEach((ingredient) {
         if (selectedIngredients.contains(ingredient.toString())) {
           count++;
         }
+        if (inputMap[ingredient.getNameAndMeasurement()] != null) {
+          if (inputMap[ingredient.getNameAndMeasurement()] <
+              ingredient.amount) {
+            int oldAmount = ingredient.amount;
+            int newAmount = ingredient.amount -
+                inputMap[ingredient.getNameAndMeasurement()];
+            count += newAmount / oldAmount;
+          }
+        }
       });
-      count = (count / recipe.ingredientList.length) * 100;
-      recipe.setPercentage(count);
+      double p = (1 - (count / total)) * 100;
+      recipe.setPercentage(p);
       count = 0;
     });
     filteredRecipes
-        .sort((a, b) => b.getPercentage().compareTo(a.getPercentage()));
+        .sort((a, b) => a.getPercentage().compareTo(b.getPercentage()));
     return filteredRecipes;
   }
 
