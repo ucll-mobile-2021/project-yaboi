@@ -19,6 +19,7 @@ class _DeleteRecipeState extends State<DeleteRecipe> {
     final recipes = Provider.of<List<Recipe>>(context) ?? [];
 
     return ListView.builder(
+      padding: EdgeInsets.all(4.0),
       itemCount: recipes.length,
       itemBuilder: (context, index) {
         String delName = recipes[index].name;
@@ -55,8 +56,8 @@ class _DeleteRecipeState extends State<DeleteRecipe> {
                         );
                       });
                 }),
-            title:
-                Text(recipes[index].name + "\n" + recipes[index].description),
+            title: Text(
+                recipes[index].name + "\n" + recipes[index].description + "\n"),
           ),
         );
       },

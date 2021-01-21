@@ -24,12 +24,12 @@ class _ResultCardState extends State<ResultCard> {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-          trailing: pressed
+          trailing: pressed && widget.missingIngredients.isNotEmpty
               ? FlatButton.icon(
                   icon: Icon(Icons.add_shopping_cart),
                   onPressed: () {
-                    databaseService
-                        .addUserGroceryList(widget.missingIngredients, widget.recipe.name);
+                    databaseService.addUserGroceryList(
+                        widget.missingIngredients, widget.recipe.name);
                     setState(() {
                       pressed = false;
                     });
@@ -37,15 +37,19 @@ class _ResultCardState extends State<ResultCard> {
                   label: Text("add"),
                 )
               : FlatButton.icon(
-                  icon: Icon(Icons.remove),
+                  icon: widget.missingIngredients.isNotEmpty
+                      ? Icon(Icons.remove)
+                      : Icon(Icons.check),
                   onPressed: () {
-                    databaseService
-                        .removeUserGroceryList(widget.missingIngredients, widget.recipe.name);
+                    databaseService.removeUserGroceryList(
+                        widget.missingIngredients, widget.recipe.name);
                     setState(() {
                       pressed = true;
                     });
                   },
-                  label: Text("remove"),
+                  label: widget.missingIngredients.isNotEmpty
+                      ? Text("remove")
+                      : Text(''),
                 ),
           title: RichText(
             text: TextSpan(
@@ -55,7 +59,7 @@ class _ResultCardState extends State<ResultCard> {
                   style: TextStyle(color: Colors.black.withOpacity(1.0)),
                 ),
                 TextSpan(
-                  text: "ingredients available: " + widget.percentage + "\n",
+                  text: "ingredients available: " + widget.percentage + "\n\n",
                   style: TextStyle(color: Colors.black.withOpacity(1.0)),
                 ),
                 widget.missingIngredients.isNotEmpty

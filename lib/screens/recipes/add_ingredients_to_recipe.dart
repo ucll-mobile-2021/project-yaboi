@@ -35,7 +35,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
             appBar: AppBar(
               backgroundColor: Colors.red[300],
               elevation: 0.0,
-              title: Text('add ingredients'),
+              title: Text('Add ingredients'),
               leading: new IconButton(
                   icon: new Icon(Icons.arrow_back),
                   onPressed: () => Navigator.push(context,

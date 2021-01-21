@@ -42,6 +42,7 @@ class _GroceryListState extends State<GroceryList> {
                     UserData userData = snapshot.data;
                     if (userData.groceryList.isNotEmpty) {
                       return ListView.builder(
+                        padding: EdgeInsets.all(4.0),
                         itemCount: userData.groceryList.length,
                         itemBuilder: (context, index) {
                           return Column(
