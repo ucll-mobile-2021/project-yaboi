@@ -39,8 +39,8 @@ class _RecipesState extends State<Recipes> {
                 title: Text('Recipes'),
                 leading: new IconButton(
                     icon: new Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Home()))),
+                    onPressed: () =>
+                        Navigator.popUntil(context, ModalRoute.withName("/"))),
               ),
               body: RecipeList(),
             ),

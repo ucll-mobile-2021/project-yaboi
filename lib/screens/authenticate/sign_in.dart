@@ -73,7 +73,7 @@ class _SignInState extends State<SignIn> {
                     ),
                     SizedBox(height: 20.0),
                     RaisedButton(
-                      color: Colors.pink[400],
+                      color: Colors.red[400],
                       child: Text(
                         'Sign in',
                         style: TextStyle(color: Colors.white),

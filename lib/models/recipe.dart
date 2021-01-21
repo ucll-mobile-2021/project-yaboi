@@ -16,6 +16,7 @@ class Recipe {
   String toString() {
     String text = '';
     text += name + '\n' + description + '\n';
+    text += "\n";
     ingredientList.forEach((ingredient) {
       text += ingredient.toString() + '\n';
     });

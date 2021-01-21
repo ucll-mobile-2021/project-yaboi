@@ -100,7 +100,7 @@ class DatabaseService {
           'name': ingredient.name,
           'measurement': ingredient.measurement,
           'amount': ingredient.amount,
-          'recipeName' : ingredient.recipeName,
+          'recipeName': ingredient.recipeName,
         }
       ]),
     });
@@ -300,5 +300,16 @@ class DatabaseService {
         .then((snapshot) => snapshot.documents.forEach((element) {
               element.reference.delete();
             }));
+  }
+
+  bool checkIfNumeric(String string) {
+    if (string == null || string.isEmpty) {
+      return false;
+    }
+    final number = num.tryParse(string);
+    if (number == null) {
+      return false;
+    }
+    return true;
   }
 }

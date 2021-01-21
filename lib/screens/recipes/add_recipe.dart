@@ -32,7 +32,7 @@ class _AddRecipeState extends State<AddRecipe> {
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
+      backgroundColor: Colors.brown[100],
             appBar: AppBar(
               backgroundColor: Colors.red[300],
               elevation: 0.0,
@@ -78,7 +78,7 @@ class _AddRecipeState extends State<AddRecipe> {
                       style: TextStyle(color: Colors.red, fontSize: 14.0),
                     ),
                     RaisedButton(
-                      color: Colors.pink[400],
+                      color: Colors.red[400],
                       child: Text(
                         'Add recipe',
                         style: TextStyle(color: Colors.white),

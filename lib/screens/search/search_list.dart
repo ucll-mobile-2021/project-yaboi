@@ -30,10 +30,10 @@ class _SearchListState extends State<SearchList> {
             ),
             Expanded(
               child: Container(
-                padding: EdgeInsets.only(top: 4.0),
+                padding: EdgeInsets.only(top: 8.0, left: 4.0, right: 4.0),
                 child: TextFormField(
                   decoration:
-                      textInputDecoration.copyWith(hintText: 'enter name'),
+                      textInputDecoration.copyWith(hintText: 'enter ingredient name'),
                   onChanged: (val) {
                     setState(() {
                       nameIngredient = val;

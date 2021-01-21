@@ -37,7 +37,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
               elevation: 0.0,
               title: Text('add ingredients'),
               leading: new IconButton(
-                  icon: new Icon(Icons.check),
+                  icon: new Icon(Icons.arrow_back),
                   onPressed: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Recipes()))),
             ),
@@ -50,7 +50,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                       children: [
                         Container(
                           padding: EdgeInsets.only(
-                              left: 5.0, right: 5.0, top: 4.0, bottom: 4.0),
+                              left: 8.0, right: 8.0, top: 8.0, bottom: 4.0),
                           child: TextFormField(
                             decoration:
                                 textInputDecoration.copyWith(hintText: 'name'),
@@ -68,14 +68,16 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                             Expanded(
                               flex: 3,
                               child: Container(
-                                padding: EdgeInsets.only(right: 2.0, left: 5.0),
+                                padding: EdgeInsets.only(right: 2.0, left: 8.0, bottom: 10.0),
                                 child: TextFormField(
                                   keyboardType: TextInputType.number,
                                   decoration: textInputDecoration.copyWith(
                                       hintText: 'amount'),
-                                  validator: (val) => val == '0' || val.isEmpty || val == null
-                                      ? 'Enter amount'
-                                      : null,
+                                  validator: (val) =>
+                                      databaseService.checkIfNumeric(val) == false ||
+                                              int.tryParse(val) <= 0
+                                          ? 'Enter amount'
+                                          : null,
                                   onChanged: (val) {
                                     setState(() {
                                       amount = int.parse(val.trim());
@@ -88,7 +90,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                               flex: 7,
                               child: Container(
                                 width: 0.5,
-                                padding: EdgeInsets.only(left: 2.0, right: 5.0),
+                                padding: EdgeInsets.only(left: 2.0, right: 8.0, bottom: 10.0),
                                 child: TextFormField(
                                   decoration: textInputDecoration.copyWith(
                                       hintText: 'measurement'),
@@ -107,7 +109,7 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                       ],
                     ),
                     RaisedButton(
-                      color: Colors.pink[400],
+                      color: Colors.red[400],
                       child: Text(
                         'Add ingredient',
                         style: TextStyle(color: Colors.white),
@@ -118,11 +120,12 @@ class _AddIngredientsToRecipeState extends State<AddIngredientsToRecipe> {
                               nameIngredient.isEmpty ||
                               measurement == null ||
                               measurement.isEmpty ||
-                              amount == 0 || amount == null) {
+                              amount == 0 ||
+                              amount == null) {
                           } else {
                             Ingredient newIngredient = Ingredient(
-                                name: nameIngredient,
-                                measurement: measurement,
+                                name: nameIngredient.toLowerCase(),
+                                measurement: measurement.toLowerCase(),
                                 amount: amount,
                                 id: ingredientId,
                                 recipeID: id);
