@@ -256,7 +256,9 @@ class DatabaseService {
       } else {
         count++;
       }
-      missingIngredients.add(ingredient);
+      if(!selectedIngredients.contains(ingredient.toString())) {
+        missingIngredients.add(ingredient);
+      }
     });
     double p = (1 - (count / total)) * 100;
     String percentage = (p).toStringAsPrecision(3) + "%";
