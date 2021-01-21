@@ -1,6 +1,4 @@
 import 'package:cobok/models/user.dart';
-import 'package:cobok/screens/home/home.dart';
-import 'package:cobok/services/auth.dart';
 import 'package:cobok/services/database.dart';
 import 'package:cobok/shared/loading.dart';
 import 'package:flutter/cupertino.dart';
@@ -68,8 +66,12 @@ class _GroceryListState extends State<GroceryList> {
                     }
                     return Card();
                   } else {
-                    return Container(
-                      child: Text('NO DATA'),
+                    return Center(
+                      child: Text(
+                        'EMPTY',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                     );
                   }
                 }),

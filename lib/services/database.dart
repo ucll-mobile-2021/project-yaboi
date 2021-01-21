@@ -252,7 +252,7 @@ class DatabaseService {
     });
     double p = (count / total) * 100;
     String percentage = (p).toStringAsFixed(0) + "%";
-    if (p >= 0) {
+    if (p > 0) {
       return Container(
           child: ResultCard(
               recipe, selectedIngredients, missingIngredients, percentage));
