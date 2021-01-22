@@ -255,10 +255,10 @@ class DatabaseService {
           missingIngredients.add(ingredient);
         }
       } else {
+        if (!selectedIngredients.contains(ingredient.toString())) {
+          missingIngredients.add(ingredient);
+        }
         count++;
-      }
-      if (!selectedIngredients.contains(ingredient.toString())) {
-        missingIngredients.add(ingredient);
       }
     });
     double p = (1 - (count / total)) * 100;
