@@ -256,7 +256,7 @@ class DatabaseService {
       } else {
         count++;
       }
-      if(!selectedIngredients.contains(ingredient.toString())) {
+      if (!selectedIngredients.contains(ingredient.toString())) {
         missingIngredients.add(ingredient);
       }
     });
@@ -270,16 +270,13 @@ class DatabaseService {
 
   List<Recipe> getFilteredRecipes(List<Recipe> recipes,
       List<Ingredient> ingredients, Map<String, int> inputMap) {
-    List<String> selectedIngredients = getTextListIngredients(ingredients);
+    //List<String> selectedIngredients = getTextListIngredients(ingredients);
     List<Recipe> filteredRecipes = recipes;
 
     filteredRecipes.forEach((recipe) {
       double count = 0;
       int total = recipe.ingredientList.length;
       recipe.ingredientList.forEach((ingredient) {
-        if (selectedIngredients.contains(ingredient.toString())) {
-          count++;
-        }
         if (inputMap[ingredient.getNameAndMeasurement()] != null) {
           if (inputMap[ingredient.getNameAndMeasurement()] <
               ingredient.amount) {
@@ -288,6 +285,8 @@ class DatabaseService {
                 inputMap[ingredient.getNameAndMeasurement()];
             count += newAmount / oldAmount;
           }
+        } else {
+          count++;
         }
       });
       double p = (1 - (count / total)) * 100;
@@ -295,7 +294,7 @@ class DatabaseService {
       count = 0;
     });
     filteredRecipes
-        .sort((a, b) => a.getPercentage().compareTo(b.getPercentage()));
+        .sort((a, b) => b.getPercentage().compareTo(a.getPercentage()));
     return filteredRecipes;
   }
 
