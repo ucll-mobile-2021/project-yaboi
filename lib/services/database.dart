@@ -252,6 +252,7 @@ class DatabaseService {
               ingredient.amount - inputMap[ingredient.getNameAndMeasurement()];
           count += newAmount / oldAmount;
           ingredient.amount = newAmount;
+          missingIngredients.add(ingredient);
         }
       } else {
         count++;
